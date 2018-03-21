@@ -39,7 +39,7 @@ sub find_max_kamata_regex($$) {
 	}
 
 	dbg 4, "using regex: $regex";
-	dbg 9, "got HTML content: $html";
+	dbg 8, "got HTML content: $html";
 	$html =~ s{$regex}{check_kamata("$1.$2")}ge;
 	dbg 3, "best_kamata=$best_kamata";
 	return $best_kamata;
