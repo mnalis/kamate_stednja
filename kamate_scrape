@@ -1,0 +1,58 @@
+#!/usr/bin/perl -wT
+# 
+# Matija Nalis <mnalis-perl@voyager.hr> GPLv3+ started on 2018-03-21
+# 
+# logira kretanje kamata na stednju u HR
+#
+
+use strict;
+use autodie qw(:all);
+use feature qw(say);
+
+my $DEBUG = 9;
+
+use WWW::Mechanize;
+
+# debug helper
+sub dbg($$) {
+	my ($level, $txt) = @_;
+	die "invalid call: dbg($level,$txt)" if $level !~ /^\d{1,3}$/;
+	print "  " x ($level-1);	# ident
+	say $txt if $DEBUG >= $level;
+}
+
+
+# pronalazi najbolju kamatu u zadanom stringu
+sub find_max_kamata($) {
+	my ($html) = @_;
+	our $best_kamata = 0;
+
+	# provjera kamate
+	sub check_kamata($) {
+		my ($pct) = @_;
+		dbg 3, "provjeravam kamatu $pct <=> $best_kamata";
+		$best_kamata = $pct if $pct > $best_kamata;
+	}
+
+	dbg 9, "got HTML content: $html";
+	$html =~ s{\b(\d{1,3})[.,](\d{2})\s*\%}{check_kamata("$1.$2")}ge;
+	dbg 2, "best_kamata=$best_kamata";
+	return $best_kamata;
+}
+
+# povlaci zadani URL i vraca najbolju kamatu koju pronadje na stranici
+sub best_kamata($) {
+	my ($url) = @_;
+	my $mech = WWW::Mechanize->new();
+	dbg 1, "Getting $url";
+	$mech->get($url);
+	die "can't fetch $url: " . $mech->response() if !$mech->success();
+	return find_max_kamata($mech->content);
+}
+
+###############################################
+# here goes the main
+###############################################
+
+
+say best_kamata ('https://www.kovanica.hr/gradanstvo/stednja/orocena-stednja/kunska');
