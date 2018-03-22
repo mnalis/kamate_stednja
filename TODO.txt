@@ -5,6 +5,8 @@ scraper za kamate HR banaka
 - WWW::Mehanize, regexp based i parse pdf
 - i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
 
+- cron 1-2 puta tjedno?
+- http://www.chartjs.org/samples/latest/charts/line/basic.html za vizualizaciju
 
 ----------------------------
 
