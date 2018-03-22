@@ -92,6 +92,10 @@ sub best_kamata_html_def($) {
 # here goes the main
 ###############################################
 
+use Cwd 'abs_path';
+my $cwd = abs_path($0);
+chdir ($cwd) or die "can't chdir to cwd $cwd: $!";
+umask 0077;
 
 opendir(my $dh, $DIR) || die "Can't opendir $DIR: $!";
 my @banks = grep { /\.pm$/ && -f "$DIR/$_" } readdir($dh);
