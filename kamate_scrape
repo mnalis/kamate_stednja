@@ -108,10 +108,11 @@ my $dbh;
 if ($DB) {
 	$dbh = DBI->connect("$DB","$DBUSER","$DBPASS");
 	$dbh->do ("CREATE TABLE IF NOT EXISTS kamate (
-			bank varchar(60),
-			pct10 int,
-			datum int DEFAULT CURRENT_DATE,
-			UNIQUE (datum,bank) )
+			bank varchar(60) NOT NULL,
+			pct10 int NOT NULL,
+			datum int DEFAULT CURRENT_DATE NOT NULL,
+			UNIQUE (datum,bank),
+			UNIQUE (bank,datum) )
 		") or die $dbh->errstr;
 	$dbh->begin_work or die $dbh->errstr;
 }
