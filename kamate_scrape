@@ -118,7 +118,8 @@ if ($DB) {
 
 foreach my $bank (@banks) {
 	my $bankcmd;
-	if ($bank =~ /^([a-z0-9_-]+\.pm)$/) { $bankcmd = "$DIR/$1" } else { die "invalid bank name: $bank" }
+	if ($bank =~ /^([a-z0-9_-]+)\.pm$/) { $bank = $1 } else { die "invalid bank name: $bank" }
+	$bankcmd = "$DIR/$1.pm";
 	if (! -r "$bankcmd" ) { die "can't read bank $bank in cmd $bankcmd" }
 	dbg 1, "*** Processing bank: $bank";
 	my $ret = require "$bankcmd";
