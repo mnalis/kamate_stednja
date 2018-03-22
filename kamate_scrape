@@ -9,11 +9,18 @@ use strict;
 use autodie qw(:all);
 use feature qw(say);
 
-my $DEBUG = $ENV{DEBUG} || 0;
+
+my $DB='dbi:SQLite:dbname=kamate.db';	# undef to skip database ops
+my $DBUSER='';
+my $DBPASS='';
+
 my $DIR = './banks';
 %ENV = ( PATH => '/usr/local/bin:/usr/bin:/bin' );
 
+my $DEBUG = $ENV{DEBUG} || 0;
+
 use WWW::Mechanize;
+use DBI;
 
 # debug helper
 sub dbg($$) {
@@ -92,6 +99,18 @@ closedir $dh;
 
 @banks = @ARGV if scalar @ARGV > 0;
 
+my $dbh;
+if ($DB) {
+	$dbh = DBI->connect("$DB","$DBUSER","$DBPASS");
+	$dbh->do ("CREATE TABLE IF NOT EXISTS kamate (
+			bank varchar(60),
+			pct10 int,
+			datum int DEFAULT CURRENT_DATE,
+			UNIQUE (datum,bank) )
+		") or die $dbh->errstr;
+	$dbh->begin_work or die $dbh->errstr;
+}
+
 foreach my $bank (@banks) {
 	my $bankcmd;
 	if ($bank =~ /^([a-z0-9_-]+\.pm)$/) { $bankcmd = "$DIR/$1" } else { die "invalid bank name: $bank" }
@@ -99,5 +118,11 @@ foreach my $bank (@banks) {
 	dbg 1, "*** Processing bank: $bank";
 	my $ret = require "$bankcmd";
 	# FIXME check if it worked, return level itd
-	say "$bank: $ret";
+	say "$ret\t$bank";
+	if ($DB) {
+		my $sth = $dbh->prepare ('REPLACE INTO kamate (bank,pct10) VALUES (?,?)') or die $dbh->errstr;
+		$sth->execute ($bank, $ret*100) or die $sth->errstr;
+	}
 }
+
+$dbh->commit or die $dbh->errstr;
