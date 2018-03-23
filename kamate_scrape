@@ -15,9 +15,9 @@ my $DBUSER='';
 my $DBPASS='';
 
 my $DIR = './banks';
+my $DEBUG = $ENV{DEBUG} || 0;
 %ENV = ( PATH => '/usr/local/bin:/usr/bin:/bin' );
 
-my $DEBUG = $ENV{DEBUG} || 0;
 
 use FindBin;
 use WWW::Mechanize;
@@ -76,6 +76,7 @@ sub fetch_url($) {
 sub best_kamata_html_mpp($$$$) {
 	my ($url, $match, $pre, $post) = @_;
 	my $html = fetch_url($url);
+	$html =~ s{<!--.*?-->}{}sg;	# remove HTML comments
 	if ($match) {
 		dbg 4, "matching only code in $match";
 		if ($html =~ /$match/si) { $html = $1 } else { die "$html\ndoesn't match $match" } 
