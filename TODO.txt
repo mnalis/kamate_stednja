@@ -12,9 +12,6 @@ scraper za kamate HR banaka
 
 
 
-PDF - addiko.hr - 1.60% (24mj) kunska fiksna (1.73% EKS na 24mj sa mjesecnim uplatama 200kn)
-	https://www.addiko.hr/addiko-orocena-stednja
-
 PDF - bks.hr - 1.70% (24mj) kunska
 	http://bks.hr/BKSWebp/BKS/bks_hr/Gradanstvo/Stednja/Orocena_stednja/index.jsp
 
