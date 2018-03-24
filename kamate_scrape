@@ -22,6 +22,7 @@ my $DEBUG = $ENV{DEBUG} || 0;
 use FindBin;
 use WWW::Mechanize;
 use DBI;
+	use File::Temp qw( tempfile unlink0 );
 
 our $mech;
 
@@ -92,6 +93,31 @@ sub best_kamata_html_def($) {
 	my ($url) = @_;
 	return best_kamata_html_mpp ($url, undef, '\b', '\s*\%');
 }
+
+# povlaci $pdf iz $mech->content (dobiven npr. za $mech->follow_link()) i vraca najbolju kamatu koju pronadje na stranici a matchira $PRE i $POST
+sub best_kamata_pdf_mpp($$$) {
+	my ($match, $pre, $post) = @_;
+	die $mech->response() if !$mech->success();
+	#print "html=$html";
+	my ($temp_fd, $tempfile) = tempfile();		# save .pdf to tempfile
+	$mech->save_content($tempfile);
+	open my $txt_fd, '-|', 'pdftotext', $tempfile, '-';
+	my $text = do { local $/; <$txt_fd>; };		# slurp text version of .pdf
+	unlink0($temp_fd, $tempfile);
+
+	if ($match) {
+		dbg 4, "matching only code in $match";
+		if ($text =~ /$match/si) { $text = $1 } else { die "$text\ndoesn't match $match" } 
+	}
+	return find_max_kamata_pp($text, $pre, $post);
+}
+
+# povlaci $pdf iz $mech->content (dobiven npr. za $mech->follow_link()) i vraca najbolju kamatu koju pronadje na stranici sa default formatom: x,xx% 
+sub best_kamata_pdf_def() {
+	return best_kamata_pdf_mpp (undef, '\b', '\s*\%');
+}
+
+
 
 ###############################################
 # here goes the main
