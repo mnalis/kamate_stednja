@@ -161,7 +161,7 @@ foreach my $bank (@banks) {
 		my $sth = $dbh->prepare ('REPLACE INTO kamate (bank,pct10) VALUES (?,?)') or die $dbh->errstr;
 		$sth->execute ($bank, $ret*100) or die $sth->errstr;
 	}
-	if ($ret == 0) die "invalid kamata $ret for $bank";
+	if ($ret == 0) { die "invalid kamata $ret for $bank"; }
 }
 
 $dbh->commit or die $dbh->errstr;
