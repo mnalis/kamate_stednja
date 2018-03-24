@@ -22,13 +22,6 @@ ONLINECALC - zaba.hr - EKS 1.65% EKS na 48mj favorit fiksna kunska
 
 
 
-- pbz-stambena.hr - 1.50% na 5 godina  zlatna stednja
-	http://www.pbz-stambena.hr/vrste-stednje.html
-	
-	PBZ postojeca stambena stednja 3.10% (i to vezana uz EUR!)
-	smijem uplatiti preko max iznosa kazu, ali ce mi uzeti 1% od razlike izmedju ugovorenog iznosa i novog iznosa sto je onda 2.10% realno kamata na novu uplatu..
-	Zlatna (Z4) 3.10% - ugovoreni iznos 9.400,00 EUR 12.12.2013. na 5 godina
-	
 - prva-stambena.hr (ZaBa) - 2.10% na 10 godina (2.00% na 7 god, 1.90% na 5 god)
 	http://www.prva-stambena.hr/home/sve-o-stambenoj-stednji#pan2
 	- ali naknada za ugovaranje 1% od ugovorenog iznosa! (0,18 % ugovornog iznosa (do 31. listopada 2017.), bez naknade za ugovaranje putem e-zabe (do 31. listopada 2017.))
