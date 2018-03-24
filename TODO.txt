@@ -22,10 +22,6 @@ ONLINECALC - zaba.hr - EKS 1.65% EKS na 48mj favorit fiksna kunska
 
 
 
-- raiffeisenstambena.hr 1.80% fiksna bez valutne klauzule
-	http://www2.raiffeisenstambena.hr/default.aspx?id=534
-	http://www2.raiffeisenstambena.hr/default.aspx?ID=522
-
 - wuestenrot.hr - 1.40%
 	1.40% za 10kEUR+ na 10 god - http://www.wuestenrot.hr/stambena-stednja/stambena-stednja-po-posebnim-uvjetima/230
 	1.5% na 5 god bez valutne - http://www.wuestenrot.hr/stambena-stednja/tarifa-spore-stednje/33
