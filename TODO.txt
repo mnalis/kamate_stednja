@@ -12,9 +12,6 @@ scraper za kamate HR banaka
 
 
 
-PDF - bks.hr - 1.70% (24mj) kunska
-	http://bks.hr/BKSWebp/BKS/bks_hr/Gradanstvo/Stednja/Orocena_stednja/index.jsp
-
 PDF - croatiabanka.hr - 1.70% 36mj fiksna kunska
 	http://www.croatiabanka.hr/hr/gradani/stednja/orocena-stednja/
 
