@@ -12,9 +12,6 @@ scraper za kamate HR banaka
 
 
 
-PDF - croatiabanka.hr - 1.70% 36mj fiksna kunska
-	http://www.croatiabanka.hr/hr/gradani/stednja/orocena-stednja/
-
 PDF - hpb.hr - 1.85% fiksna kunska na 36mj (otvorena 1.65% na 36mj za 50kkn+)
 	https://www.hpb.hr/opci-uvjeti-poslovanja/
 	https://www.hpb.hr/gradanstvo/stednja/orocena-kunska-stednja
