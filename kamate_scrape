@@ -60,7 +60,7 @@ sub find_max_kamata_regex($$) {
 # pronalazi max kamatu sa zadanim $PRE i $POST u standardnom regexpu
 sub find_max_kamata_pp($$$) {
 	my ($html, $pre, $post) = @_;
-	my $regex = "$pre" . '(\d{1,3})[.,](\d{2})' . "$post";
+	my $regex = "$pre" . '([1-9]?\d)[.,](\d{2})' . "$post";
 	return find_max_kamata_regex($html, $regex);
 }
 
