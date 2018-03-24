@@ -23,6 +23,8 @@ use FindBin;
 use WWW::Mechanize;
 use DBI;
 
+our $mech;
+
 # debug helper
 sub dbg($$) {
 	my ($level, $txt) = @_;
@@ -65,7 +67,7 @@ sub find_max_kamata_pp($$$) {
 # fetches URL and returns content as string
 sub fetch_url($) {
 	my ($url) = @_;
-	my $mech = WWW::Mechanize->new();
+	$mech = WWW::Mechanize->new();
 	$mech->agent('like Wget/1.18 (linux-gnu) - WWW::Mechanize');
 	dbg 2, "Getting $url";
 	$mech->get($url);
@@ -125,6 +127,7 @@ foreach my $bank (@banks) {
 	$bankcmd = "$DIR/$1.pm";
 	if (! -r "$bankcmd" ) { die "can't read bank $bank in cmd $bankcmd" }
 	dbg 1, "*** Processing bank: $bank";
+	$mech=undef;
 	my $ret = require "$bankcmd";
 	# FIXME check if it worked, return level itd
 	say "$ret\t$bank";
