@@ -6,15 +6,5 @@ scraper za kamate HR banaka
 - i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
 
 - cron 1-2 puta tjedno?
+
 - http://www.chartjs.org/samples/latest/charts/line/basic.html za vizualizaciju
-
-----------------------------
-
-
-
-
-ONLINECALC - zaba.hr - EKS 1.65% EKS na 48mj favorit fiksna kunska
-	http://www.zaba.hr/home/stednja-i-ulaganja/orocenja
-
-
-
