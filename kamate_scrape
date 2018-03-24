@@ -88,6 +88,18 @@ sub best_kamata_html_mpp($$$$) {
 	return find_max_kamata_pp($html, $pre, $post);
 }
 
+# povlaci zadani URL i vraca najbolju kamatu koju pronadje na stranici a matchira $REGEX
+sub best_kamata_html_regex($$$) {
+	my ($url, $match, $regex) = @_;
+	my $html = fetch_url($url);
+	$html =~ s{<!--.*?-->}{}sg;	# remove HTML comments
+	if ($match) {
+		dbg 4, "matching only code in $match";
+		if ($html =~ /$match/si) { $html = $1 } else { die "$html\ndoesn't match $match" } 
+	}
+	return find_max_kamata_regex($html, $regex);
+}
+
 # povlaci zadani URL i vraca najbolju kamatu koju pronadje na stranici sa default formatom: x,xx% 
 sub best_kamata_html_def($) {
 	my ($url) = @_;
