@@ -13,9 +13,6 @@ scraper za kamate HR banaka
 
 
 
-ONLINECALC - otpbanka.hr - 1.70% na 48-60mj promjenjiva kunska (1.20% fiksna 12mj)
-	https://www.otpbanka.hr/hr/gradani/orocena-stednja-uz-fiksnu-kamatnu-stopu
-
 ONLINECALC - zaba.hr - EKS 1.65% EKS na 48mj favorit fiksna kunska
 	http://www.zaba.hr/home/stednja-i-ulaganja/orocenja
 
