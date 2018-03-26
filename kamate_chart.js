@@ -3,13 +3,13 @@
 			data: {},
 			options: {
 				responsive: true,
-				spanGaps: true,
+				spanGaps: false,
 				title: {
 					display: true,
 					text: 'Banke kamate Chart.js'
 				},
 				tooltips: {
-					mode: 'index',
+					mode: 'point',
 					intersect: false,
 				},
 				hover: {
