@@ -28,7 +28,7 @@
 						distribution: 'linear',
 						scaleLabel: {
 							display: true,
-							labelString: 'Time'
+							labelString: 'Datum'
 						}
 					}],
 					yAxes: [{
