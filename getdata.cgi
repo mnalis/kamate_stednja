@@ -9,6 +9,10 @@ my $DB='dbi:SQLite:dbname=kamate.db';
 my $DBUSER='';
 my $DBPASS='';
 
+my @COLORS = qw ( Yellow Fuchsia Red Silver Gray Olive Purple Maroon Aqua Lime Teal Green Blue Navy
+	Aqua  Bisque  Aquamarine BlueViolet   BurlyWood  CadetBlue  Chartreuse  Chocolate  Crimson DarkGoldenRod  DarkCyan  DarkOliveGreen DarkMagenta  DarkSeaGreen  DeepPink  ForestGreen GreenYellow  LightCoral  MediumAquaMarine MediumVioletRed OrangeRed 
+	);
+
 my $DEBUG = $ENV{DEBUG} || 0;
 %ENV = ( PATH => '/usr/local/bin:/usr/bin:/bin' );
 
@@ -16,6 +20,14 @@ my $DEBUG = $ENV{DEBUG} || 0;
 use FindBin;
 use DBI;
 use JSON qw( to_json );
+
+
+# returns new color for graph
+sub get_new_color() {
+	my $color = pop @COLORS;
+	if (! $color) { $color = sprintf ("#%06X", int(rand(256*256*256))); }
+	return $color;
+}
 
 my $cwd = $FindBin::Bin;
 if ($cwd =~ m{^([a-z0-9_.\-\/]+)$}) { $cwd = $1 } else { die "invalid chars in CWD $cwd" }
@@ -70,7 +82,14 @@ my %OUTPUT_JSON = ();
 $OUTPUT_JSON{'labels'} = \@JSON_labels;
 
 foreach my $bank (keys %JSON_banks) {
-	my %dataset = ( label => $bank, borderColor => 'red', fill => 'false', data => $JSON_banks{$bank} );
+	my $color = get_new_color();
+	my %dataset = (
+		label => $bank,
+		borderColor => $color,
+		backgroundColor => $color,
+		fill => 'false',
+		data => $JSON_banks{$bank},
+		);
 	push @{$OUTPUT_JSON{'datasets'}}, \%dataset;
 }
 
