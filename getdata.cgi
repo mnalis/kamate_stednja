@@ -14,8 +14,13 @@ my $DEBUG = $ENV{DEBUG} || 0;
 
 
 use FindBin;
-use WWW::Mechanize;
 use DBI;
+use JSON qw( to_json );
+
+my $cwd = $FindBin::Bin;
+if ($cwd =~ m{^([a-z0-9_.\-\/]+)$}) { $cwd = $1 } else { die "invalid chars in CWD $cwd" }
+chdir ($cwd) or die "can't chdir to cwd $cwd: $!";
+umask 0077;
 
 my $dbh = DBI->connect("$DB","$DBUSER","$DBPASS", { Taint => 1, ReadOnly => 1 });
 my $sth = $dbh->prepare ('SELECT datum, bank, pct10 FROM kamate') or die $dbh->errstr;
@@ -48,10 +53,10 @@ foreach my $datum (sort keys %all) {
 	}
 	$DEBUG > 2 && say "post=", Dumper(\%banks_pct);
 
-	# save
+	# save per-bank percentages in array
 	push @JSON_labels, $datum;
 	foreach my $bank (keys %banks_pct) {
-		say "bank=$bank";
+		$DEBUG > 3 && say "adding to JSON_banks{$bank}: $banks_pct{$bank}";
 		push @{$JSON_banks{$bank}}, $banks_pct{$bank};
 	}
 }
@@ -60,3 +65,14 @@ foreach my $datum (sort keys %all) {
 $DEBUG > 0 && say "labels=" . Dumper(\@JSON_labels);
 $DEBUG > 0 && say "JSON_banks=" . Dumper(\%JSON_banks);
 
+# generate and output JSON file
+my %OUTPUT_JSON = ();
+$OUTPUT_JSON{'labels'} = \@JSON_labels;
+
+foreach my $bank (keys %JSON_banks) {
+	my %dataset = ( label => $bank, borderColor => 'red', fill => 'false', data => $JSON_banks{$bank} );
+	push @{$OUTPUT_JSON{'datasets'}}, \%dataset;
+}
+
+say to_json(\%OUTPUT_JSON, { ascii => 1, pretty => 1 } );
+exit 0;
