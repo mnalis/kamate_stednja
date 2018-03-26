@@ -6,7 +6,9 @@ nothing:
 run:
 	if [ "`id -un`" = "$(USER)" ] ; then ./kamate_scrape; else env -i setuidgid $(USER) ./kamate_scrape; fi
 update:
-	if [ "`id -un`" = "$(USER)" ] ; then git pull; else env -i setuidgid $(USER) git pull; fi
+	umask 077; if [ "`id -un`" = "$(USER)" ] ; then git pull; else env -i setuidgid $(USER) git pull; fi
+	chmod -R 644 *.html *.js ChartJS
+	chmod 700 *.cgi kamate_scrape
 
 publish:
 	git add banks
