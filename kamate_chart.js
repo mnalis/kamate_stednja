@@ -3,6 +3,7 @@
 			data: {},
 			options: {
 				responsive: true,
+				spanGaps: true,
 				title: {
 					display: true,
 					text: 'Banke kamate Chart.js'
