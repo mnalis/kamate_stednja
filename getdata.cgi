@@ -29,6 +29,8 @@ sub get_new_color() {
 	return lc($color);
 }
 
+print "Content-Type: application/json\r\n\r\n";
+
 my $cwd = $FindBin::Bin;
 if ($cwd =~ m{^([a-z0-9_.\-\/]+)$}) { $cwd = $1 } else { die "invalid chars in CWD $cwd" }
 chdir ($cwd) or die "can't chdir to cwd $cwd: $!";
