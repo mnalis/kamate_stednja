@@ -52,7 +52,7 @@
 				window.myLine = new Chart(ctx, config);
 			    }
 			};
-			jsonhttp.open("GET", "getdata.json", true);
+			jsonhttp.open("GET", "getdata.cgi", true);
 			jsonhttp.send(); 
 		};
 
