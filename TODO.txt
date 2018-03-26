@@ -1,12 +1,11 @@
 scraper za kamate HR banaka
 
-- koji puni sql(lite?) tablicu i generira HTML
++ koji puni sql(lite?) tablicu i generira HTML
 - i pazi ako je velika promjena pa napravi alert
-- WWW::Mehanize, regexp based i parse pdf
++ WWW::Mehanize, regexp based i parse pdf
 - i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
   http://www.dab.hr/osiguranje-depozita/kreditne-institucije
 
 
-- cron 1-2 puta tjedno?
-
-- http://www.chartjs.org/samples/latest/charts/line/basic.html za vizualizaciju
++ cron 1-2 puta tjedno?
++ http://www.chartjs.org/samples/latest/charts/line/basic.html za vizualizaciju
