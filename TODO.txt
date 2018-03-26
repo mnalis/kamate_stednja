@@ -4,6 +4,8 @@ scraper za kamate HR banaka
 - i pazi ako je velika promjena pa napravi alert
 - WWW::Mehanize, regexp based i parse pdf
 - i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
+  http://www.dab.hr/osiguranje-depozita/kreditne-institucije
+
 
 - cron 1-2 puta tjedno?
 

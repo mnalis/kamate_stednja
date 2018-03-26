@@ -22,7 +22,7 @@ my $DEBUG = $ENV{DEBUG} || 0;
 use FindBin;
 use WWW::Mechanize;
 use DBI;
-	use File::Temp qw( tempfile unlink0 );
+use File::Temp qw( tempfile unlink0 );
 
 our $mech;
 
@@ -141,7 +141,7 @@ chdir ($cwd) or die "can't chdir to cwd $cwd: $!";
 umask 0077;
 
 opendir(my $dh, $DIR) || die "Can't opendir $DIR: $!";
-my @banks = grep { /\.pm$/ && -f "$DIR/$_" } readdir($dh);
+my @banks = sort grep { /\.pm$/ && -f "$DIR/$_" } readdir($dh);
 closedir $dh;
 
 @banks = @ARGV if scalar @ARGV > 0;
