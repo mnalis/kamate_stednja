@@ -26,7 +26,7 @@ use JSON qw( to_json );
 sub get_new_color() {
 	my $color = pop @COLORS;
 	if (! $color) { $color = sprintf ("#%06X", int(rand(256*256*256))); }
-	return $color;
+	return lc($color);
 }
 
 my $cwd = $FindBin::Bin;
