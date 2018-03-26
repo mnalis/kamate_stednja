@@ -17,7 +17,7 @@ use FindBin;
 use WWW::Mechanize;
 use DBI;
 
-my $dbh = DBI->connect("$DB","$DBUSER","$DBPASS");
+my $dbh = DBI->connect("$DB","$DBUSER","$DBPASS", { Taint => 1, ReadOnly => 1 });
 my $sth = $dbh->prepare ('SELECT datum, bank, pct10 FROM kamate ORDER BY datum') or die $dbh->errstr;
 $sth->execute () or die $sth->errstr;
 
@@ -28,3 +28,12 @@ while (my $href = $sth->fetchrow_hashref) {
 
 use Data::Dumper;
 say Dumper(\%all);
+
+
+foreach my $datum (keys %all) {
+	my $day_aref = $all{$datum};
+	say "za datum $datum";
+	foreach my $bank_href (@$day_aref) {
+		say "\tbanka=" . $$bank_href{'bank'} . "\tpct=" . $$bank_href{'pct'};
+	}
+}
