@@ -219,6 +219,7 @@ $dbh->commit or die $dbh->errstr;
 
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
+		next if $bank =~ /vaba|tesla-banka|jtbanka|stedbanka/;	# FIXME dab.hr bugs 20180327, ignore for now
 		warn "sumnjiv status banke $bank";
 	}
 }
