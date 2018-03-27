@@ -1,4 +1,9 @@
 #!/usr/bin/perl -wT
+#
+# Matija Nalis <mnalis-perl@voyager.hr> AGPLv3+ started on 2018-03-26
+#
+# ispis kretanje kamata na stednju u HR (JSON output za ChartJS graph)
+#
 
 use strict;
 use autodie qw(:all);
