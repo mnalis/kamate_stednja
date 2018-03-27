@@ -36,6 +36,26 @@ sub dbg($$) {
 	}
 }
 
+# extract domain name only from URL
+sub extract_domain($) {
+	my ($url) = @_;
+	die "cannot extract domain from URL $url" if $url !~ m{^\s*https?://(www[0-9]?\.)?(?'DOMAIN'.*?)(/.*)?$}i;
+	my $domain = $+{DOMAIN};
+	dbg 4, "extracted domain $domain from url >$url<";
+	return $domain;
+}
+
+# scans file for any url, and return first one
+sub scan_for_url ($) {
+	my ($file) = @_;
+	open my $fd, '<', $file;
+	my $html = do { local $/; <$fd>; };		# slurp text version of .pdf
+	die "cannot find URL in $file" if $html !~ m{["'](https?://.*?)['"]};
+	my $url = $1;
+
+	dbg 3, "scanned in $file for URL, found $url";
+	return $url;
+}
 
 # pronalazi najbolju kamatu u zadanom stringu po regexu
 sub find_max_kamata_regex($$) {
@@ -159,11 +179,30 @@ if ($DB) {
 	$dbh->begin_work or die $dbh->errstr;
 }
 
+# DAB.hr parsing list of banks
+my $html = fetch_url('http://www.dab.hr/osiguranje-depozita/kreditne-institucije');
+$html =~ s{^.*Popis .*?lanica sustava osiguranja.*?(<ol>.*?</ol>).*$}{$1}si;
+dbg (9, "DAB HTML=$html");
+
+$mech->update_html($html);
+my @dab_banks = $mech->find_all_links();
+
+our %DAB_BANKS = ();
+# list of all banks at DAB.HR
+foreach my $bank (@dab_banks) {
+	my $url = $bank->url();
+	my $domain = extract_domain($url);
+	dbg 3, "DAB bank URL=$url, domain=$domain";
+	$DAB_BANKS{$domain} = -1;
+}
+
+# parse banks one by one
 foreach my $bank (@banks) {
 	my $bankcmd;
 	if ($bank =~ /^([a-z0-9_-]+)\.pm$/) { $bank = $1 } else { die "invalid bank name: $bank" }
 	$bankcmd = "$DIR/$1.pm";
 	if (! -r "$bankcmd" ) { die "can't read bank $bank in cmd $bankcmd" }
+	$DAB_BANKS{extract_domain(scan_for_url($bankcmd))}++;	# increase bank from -1 to 0
 	dbg 1, "*** Processing bank: $bank";
 	$mech=undef;
 	my $ret = require "$bankcmd";
@@ -177,3 +216,9 @@ foreach my $bank (@banks) {
 }
 
 $dbh->commit or die $dbh->errstr;
+
+foreach my $bank (keys %DAB_BANKS) {
+	if ($DAB_BANKS{$bank} != 0) {
+		warn "sumnjiv status banke $bank";
+	}
+}

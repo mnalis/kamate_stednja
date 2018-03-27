@@ -1,11 +1,21 @@
 scraper za kamate HR banaka
 
+- license i link na source u .html
+
 + koji puni sql(lite?) tablicu i generira HTML
 - i pazi ako je velika promjena pa napravi alert
 + WWW::Mehanize, regexp based i parse pdf
-- i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
+
++? i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
   http://www.dab.hr/osiguranje-depozita/kreditne-institucije
+
+    sumnjiv status banke vaba.hr at ./kamate_scrape line 222.                                                                                                                                                                        ~/work/kamate_stednja
+    sumnjiv status banke tesla-banka.hr at ./kamate_scrape line 222.
+    sumnjiv status banke jtbanka.hr at ./kamate_scrape line 222.
+    sumnjiv status banke stedbanka.hr at ./kamate_scrape line 222.
+
 
 
 + cron 1-2 puta tjedno?
 + http://www.chartjs.org/samples/latest/charts/line/basic.html za vizualizaciju
+
