@@ -50,6 +50,26 @@
 
 				var ctx = document.getElementById('canvas').getContext('2d');
 				window.myLine = new Chart(ctx, config);
+
+				// find last pct for each bank, in order to create table:
+				var last_pct = [];
+				for (var i in config.data.datasets) {
+					var cur=config.data.datasets[i];
+					last_pct.push ([ cur.label, cur.data[cur.data.length-1] ]);
+				}
+				last_pct.sort(function(a, b) {
+					retVal=0;
+					if(a[1]!=b[1]) retVal=a[1]>b[1]?1:-1;
+					return retVal
+				});
+				var old_tbody = document.getElementById('tbody_lastpct');
+				var new_tbody = document.createElement('tbody');
+				for (var i in last_pct) {
+					var row = new_tbody.insertRow(0);
+					var cell_label = row.insertCell(0); cell_label.innerHTML = last_pct[i][0];
+					var cell_pct = row.insertCell(1); cell_pct.innerHTML = last_pct[i][1].toFixed(2) + "%";
+				}
+				old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
 			    }
 			};
 			jsonhttp.open("GET", "getdata.cgi", true);

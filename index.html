@@ -11,6 +11,21 @@
 		-webkit-user-select: none;
 		-ms-user-select: none;
 	}
+	table {
+		text-align: left;
+		background-color: #fafafa;
+		border: 1px black solid;
+		border-spacing: 0px;
+		border-collapse: collapse;
+	}
+	td, th {
+		border: 1px black solid;
+		padding: 2px 1em 2px 1em;
+	}
+	th {
+		background: #eee;
+		font-weight: bold;
+	}
 	</style>
 </head>
 
@@ -21,6 +36,21 @@
 	<br>
 	<br>
 	<script src="kamate_chart.js" defer></script>
+	<a name="table">
+	<table>
+		<caption>Zadnja vrijednost (najveće) kamatne stope za štednju za svaku banku</caption>
+		<thead>
+			<tr>
+				<th>Banka</th>
+				<th>Posljednja kamatna stopa</th>
+			</tr>
+		</thead>
+		<tbody id="tbody_lastpct">
+		</tbody>
+	</table>
+
+	<p>
+
 	<footer>
 		Ovo je <A HREF="https://github.com/mnalis/kamate_stednja">slobodni softver</A>, licenciran pod <A HREF="COPYING">AGPLv3+</A> licencom.
 	</footer>
