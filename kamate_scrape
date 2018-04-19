@@ -139,7 +139,7 @@ sub best_kamata_pdf_mpp($$$) {
 
 	if ($match) {
 		dbg 4, "matching only code in $match";
-		if ($text =~ /$match/si) { $text = $1 } else { die "$text\ndoesn't match $match" } 
+		if ($text =~ /$match/si) { $text = %+ ? values %+ : $1  } else { die "$text\ndoesn't match $match" } 	# if using multiple named groups, use multiple values; otherwise assume only one present
 	}
 	return find_max_kamata_pp($text, $pre, $post);
 }
