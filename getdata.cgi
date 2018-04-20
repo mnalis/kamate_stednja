@@ -91,6 +91,7 @@ $OUTPUT_JSON{'labels'} = \@JSON_labels;
 foreach my $bank (keys %JSON_banks) {
 	my $color = get_new_color();
 	my %dataset = (
+		lineTension => 0.05,
 		label => $bank,
 		borderColor => $color,
 		backgroundColor => $color,
