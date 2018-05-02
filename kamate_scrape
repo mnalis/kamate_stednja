@@ -215,7 +215,7 @@ foreach my $bank (@banks) {
 	if (! $FORCE) {
 		my @values = $sth_check->fetchrow_array;
 		if (@values && $values[0] > 0) {
-			my $pct = $values[0]/100;
+			my $pct = sprintf '%0.2f', $values[0]/100;
 			say "$pct\t$bank (cached)";
 			dbg 1, "*** Already have pct=$pct for $bank at $now, skipping...";
 			next;
