@@ -16,9 +16,11 @@ my $DBPASS='';
 
 my $DIR = './banks';
 my $DEBUG = $ENV{DEBUG} || 0;
+my $FORCE = $ENV{FORCE} || 0;
 %ENV = ( PATH => '/usr/local/bin:/usr/bin:/bin' );
 
 
+use POSIX qw(strftime);
 use FindBin;
 use WWW::Mechanize;
 use DBI;
@@ -160,12 +162,6 @@ if ($cwd =~ m{^([a-z0-9_.\-\/]+)$}) { $cwd = $1 } else { die "invalid chars in C
 chdir ($cwd) or die "can't chdir to cwd $cwd: $!";
 umask 0077;
 
-opendir(my $dh, $DIR) || die "Can't opendir $DIR: $!";
-my @banks = sort grep { /\.pm$/ && -f "$DIR/$_" } readdir($dh);
-closedir $dh;
-
-@banks = @ARGV if scalar @ARGV > 0;
-
 my $dbh;
 if ($DB) {
 	$dbh = DBI->connect("$DB","$DBUSER","$DBPASS");
@@ -178,6 +174,12 @@ if ($DB) {
 		") or die $dbh->errstr;
 	$dbh->begin_work or die $dbh->errstr;
 }
+
+opendir(my $dh, $DIR) || die "Can't opendir $DIR: $!";
+my @banks = sort grep { s/\.pm$// && -f "$DIR/$_.pm" } readdir($dh);
+closedir $dh;
+
+@banks = @ARGV if scalar @ARGV > 0;
 
 # DAB.hr parsing list of banks
 my $html = fetch_url('http://www.dab.hr/osiguranje-depozita/kreditne-institucije');
@@ -196,30 +198,45 @@ foreach my $bank (@dab_banks) {
 	$DAB_BANKS{$domain} = -1;
 }
 
+my $sth_check = $dbh->prepare ('SELECT pct10 from kamate where bank=? and datum=?') or die $dbh->errstr;	# only check banks which do not have info for today
+my $now = strftime "%Y-%m-%d", localtime;
+
 # parse banks one by one
 foreach my $bank (@banks) {
-	my $bankcmd;
-	if ($bank =~ /^([a-z0-9_-]+)\.pm$/) { $bank = $1 } else { die "invalid bank name: $bank" }
-	$bankcmd = "$DIR/$1.pm";
+	if ($bank =~ /^([a-z0-9_-]+)$/) { $bank = $1 } else { die "invalid bank name: $bank" }
+	my $bankcmd = "$DIR/$1.pm";
 	if (! -r "$bankcmd" ) { die "can't read bank $bank in cmd $bankcmd" }
 	$DAB_BANKS{extract_domain(scan_for_url($bankcmd))}++;	# increase bank from -1 to 0
+	my $rv = $sth_check->execute($bank, $now) or die $sth_check->errstr;
+	dbg 4,"rv=$rv for bank=$bank now=$now";
 	dbg 1, "*** Processing bank: $bank";
 	$mech=undef;
+
+	if (! $FORCE) {
+		my @values = $sth_check->fetchrow_array;
+		if (@values && $values[0] > 0) {
+			my $pct = $values[0]/100;
+			say "$pct\t$bank (cached)";
+			dbg 1, "*** Already have pct=$pct for $bank at $now, skipping...";
+			next;
+		}
+	}
+
 	my $ret = require "$bankcmd";
 	# FIXME check if it worked, return level itd
 	say "$ret\t$bank";
+	if ($ret <= 0) { die "invalid kamata $ret for $bank"; }
 	if ($DB) {
 		my $sth = $dbh->prepare ('REPLACE INTO kamate (bank,pct10) VALUES (?,?)') or die $dbh->errstr;
 		$sth->execute ($bank, $ret*100) or die $sth->errstr;
 	}
-	if ($ret == 0) { die "invalid kamata $ret for $bank"; }
 }
 
 $dbh->commit or die $dbh->errstr;
 
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
-		next if $bank =~ /vaba|jtbanka|bks/;	# FIXME dab.hr bugs 20180411, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR
+		next if $bank =~ /vaba|jtbanka|bks|stedbanka/;	# FIXME dab.hr bugs 20180502, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR; stedbanka.hr u likvidaciji
 		warn "sumnjiv status banke $bank";
 	}
 }
