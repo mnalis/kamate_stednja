@@ -222,13 +222,18 @@ foreach my $bank (@banks) {
 		}
 	}
 
-	my $ret = require "$bankcmd";
-	# FIXME check if it worked, return level itd
-	say "$ret\t$bank";
-	if ($ret <= 0) { die "invalid kamata $ret for $bank"; }
+	my $pct = 0;
+	my $ret = eval { $pct = require "$bankcmd"; };
+	dbg 2, "finished $bank: pct=$pct ret=" . ($ret ? $ret : "undef");
+	if (! $ret) {
+		warn "neuspjesno dohvacanje banke $bank ($pct)";
+		next;
+	}
+	say "$pct\t$bank";
+	if ($pct <= 0) { die "invalid kamata $pct for $bank"; }
 	if ($DB) {
 		my $sth = $dbh->prepare ('REPLACE INTO kamate (bank,pct10) VALUES (?,?)') or die $dbh->errstr;
-		$sth->execute ($bank, $ret*100) or die $sth->errstr;
+		$sth->execute ($bank, $pct*100) or die $sth->errstr;
 	}
 }
 
