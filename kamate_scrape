@@ -179,7 +179,11 @@ opendir(my $dh, $DIR) || die "Can't opendir $DIR: $!";
 my @banks = sort grep { s/\.pm$// && -f "$DIR/$_.pm" } readdir($dh);
 closedir $dh;
 
-@banks = @ARGV if scalar @ARGV > 0;
+my $manual = 0;
+if (scalar @ARGV > 0) {
+	@banks = @ARGV;
+	$manual = 1;
+}
 
 # DAB.hr parsing list of banks
 my $html = fetch_url('http://www.dab.hr/osiguranje-depozita/kreditne-institucije');
@@ -216,9 +220,11 @@ foreach my $bank (@banks) {
 		my @values = $sth_check->fetchrow_array;
 		if (@values && $values[0] > 0) {
 			my $pct = sprintf '%0.2f', $values[0]/100;
-			say "$pct\t$bank (cached)";
-			dbg 1, "*** Already have pct=$pct for $bank at $now, skipping...";
-			next;
+			if (! $manual) {
+				say "$pct\t$bank (cached)";
+				dbg 1, "*** Already have pct=$pct for $bank at $now, skipping...";
+				next;
+			}
 		}
 	}
 
