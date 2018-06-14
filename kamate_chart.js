@@ -67,7 +67,7 @@ window.onload = function() {
 		for (var i in last_pct) {
 			var row = new_tbody.insertRow(0);
 			var cell_label = row.insertCell(0); cell_label.innerHTML = last_pct[i][0];
-			var cell_pct = row.insertCell(1); cell_pct.innerHTML = last_pct[i][1].toFixed(2) + "%";
+			var cell_pct = row.insertCell(1); cell_pct.innerHTML = last_pct[i][1] ? last_pct[i][1].toFixed(2) + "%" : "-";
 		}
 		old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
 	    }
