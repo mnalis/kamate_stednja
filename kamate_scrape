@@ -247,7 +247,7 @@ $dbh->commit or die $dbh->errstr;
 
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
-		next if $bank =~ /vaba|jtbanka|bks|stedbanka/;	# FIXME dab.hr bugs 20180502, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR; stedbanka.hr u likvidaciji
+		next if $bank =~ /vaba|jtbanka|bks|stedbanka|prva-stambena/;	# FIXME dab.hr bugs 20180614, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR; stedbanka.hr u likvidaciji, prva-stambena.hr pripojena zabi
 		warn "sumnjiv status banke $bank";
 	}
 }
