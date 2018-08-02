@@ -7,6 +7,10 @@ scraper za kamate HR banaka
 
 - kasnije: support za range datuma
 
+- .cgi - ako ima dovoljno tocaka da simplificira mozda (>40 da uzme svaku drugu, > 80 svaku cetvrtu itd)
+
+- da u tablici stavi zadnje gretanje zeleni trokutic UP ili crvani down ili bijelu kocku (UTF8) ili barem "<", "=", ">" ... CSS. ili cak cijeli history npr "===>===<<" za zadnjim vece velicine
+
 +? i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
   http://www.dab.hr/osiguranje-depozita/kreditne-institucije
 
