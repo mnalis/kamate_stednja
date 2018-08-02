@@ -69,14 +69,14 @@ window.onload = function() {
 			var row = new_tbody.insertRow(0);
 			var cell_label = row.insertCell(0); cell_label.innerHTML = last_pct[banka_idx][0];
 			var cell_pct = row.insertCell(1);
-			var pct_all = last_pct[banka_idx][2];
-			var pct_prev = pct_all[1];
 			var pct_l = last_pct[banka_idx][1];
 			var txt = pct_l ? pct_l.toFixed(2) + "% " : "&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;";			// assume  no data for last percentage, unless proven otherwise
+			var pct_all = last_pct[banka_idx][2];
+			var pct_prev = pct_all[1];
 			for (var pct_idx in pct_all) {
 				pct_cur = pct_all[pct_idx];
 				var txt2 = '-';	// default sign if no percentage defined
-				if (pct_cur) {
+				if (pct_cur && pct_prev) {
 					if (pct_cur > pct_prev) {
 						txt2 = "<span class=u>&#x25B2;</span>";	// triangle up
 					} else if (pct_cur < pct_prev) {
