@@ -1,13 +1,14 @@
 scraper za kamate HR banaka
 
+- .cgi - ako ima dovoljno tocaka da simplificira mozda (>40 da uzme svaku drugu, > 80 svaku cetvrtu itd)
+  i/ili paziti da ima podjednak razmak izmedju tocaka (jer nisu sve nuzno svakih 7 dana)
+
 - do not die if get() fails etc. - retry few times, and warn if still not good
 
 - pazi ako je velika promjena pa napravi alert
 - legenda graph sort datasource po zadnjoj vrijednosti (najveci prvi, pa onda prema manjima - radi lakseg gasenja nebitnih...)
 
 - kasnije: support za range datuma
-
-- .cgi - ako ima dovoljno tocaka da simplificira mozda (>40 da uzme svaku drugu, > 80 svaku cetvrtu itd)
 
 +? i gleda da li ima novih banaka u dab.hr (ili su nestale stare!)
   http://www.dab.hr/osiguranje-depozita/kreditne-institucije
