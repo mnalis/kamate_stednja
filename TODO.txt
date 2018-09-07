@@ -5,6 +5,8 @@ scraper za kamate HR banaka
 
 - do not die if get() fails etc. - retry few times, and warn if still not good
 
+- banke imena da su linkovi koji vode na stranicu sa kamatama za stednju
+
 - pazi ako je velika promjena pa napravi alert
 - legenda graph sort datasource po zadnjoj vrijednosti (najveci prvi, pa onda prema manjima - radi lakseg gasenja nebitnih...)
 
