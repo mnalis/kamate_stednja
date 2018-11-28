@@ -92,6 +92,7 @@ sub fetch_url($) {
 	my ($url) = @_;
 	$mech = WWW::Mechanize->new();
 	$mech->agent('like Wget/1.18 (linux-gnu) - WWW::Mechanize');
+        $mech->ssl_opts(verify_hostname => 0, SSL_verify_mode => 0x00);	# kludge: allow fetching of broken HTTPS, FIXME/DELME!
 	dbg 2, "Getting $url";
 	$mech->get($url);
 	die "can't fetch $url: " . $mech->response() if !$mech->success();
@@ -232,7 +233,7 @@ foreach my $bank (@banks) {
 	my $ret = eval { $pct = require "$bankcmd"; };
 	dbg 2, "finished $bank: pct=$pct ret=" . ($ret ? $ret : "undef");
 	if (! $ret) {
-		warn "neuspjesno dohvacanje banke $bank ($pct)";
+		warn "neuspjesno dohvacanje banke $bank ($pct): $@";
 		next;
 	}
 	say "$pct\t$bank";

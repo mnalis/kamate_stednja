@@ -1,5 +1,6 @@
 scraper za kamate HR banaka
 
+- comment out SSL-kludge SSL_verify_mode => '0x00'
 - .cgi - ako ima dovoljno tocaka da simplificira mozda (>40 da uzme svaku drugu, > 80 svaku cetvrtu itd)
   i/ili paziti da ima podjednak razmak izmedju tocaka (jer nisu sve nuzno svakih 7 dana)
 
