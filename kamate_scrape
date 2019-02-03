@@ -187,7 +187,7 @@ if (scalar @ARGV > 0) {
 }
 
 # DAB.hr parsing list of banks
-my $html = fetch_url('http://www.dab.hr/osiguranje-depozita/kreditne-institucije');
+my $html = fetch_url('http://www.dab.hr/clanice');
 $html =~ s{^.*Popis .*?lanica sustava osiguranja.*?(<ol>.*?</ol>).*$}{$1}si;
 dbg (9, "DAB HTML=$html");
 
@@ -248,7 +248,7 @@ $dbh->commit or die $dbh->errstr;
 
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
-		next if $bank =~ /vaba|jtbanka|bks|stedbanka|primorska|veneto|splitska|kbz|agram/;	# FIXME dab.hr bugs 20190101, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR; stedbanka.hr i primorska.hr u likvidaciji, prva-stambena.hr pripojena ZABA-i, veneto pripojen PBZ-u, splitska pripojena OTP-u. KBZ preimenovan u Agram.
+		next if $bank =~ /bks|primorska|veneto|splitska|kbz|agram/;	# FIXME dab.hr bugs 20190101, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR; stedbanka.hr i primorska.hr u likvidaciji, prva-stambena.hr pripojena ZABA-i, veneto pripojen PBZ-u, splitska pripojena OTP-u. KBZ preimenovan u Agram.
 		warn "sumnjiv status banke $bank ($DAB_BANKS{$bank})";
 	}
 }
