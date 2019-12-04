@@ -246,9 +246,19 @@ foreach my $bank (@banks) {
 
 $dbh->commit or die $dbh->errstr;
 
+# bank $src is gone. specify $dst if separate page on destination bank, or leave undef
+sub bank_merge($$)  {
+	my ($src, $dst) = @_;
+	$DAB_BANKS{$src}++ if $src;
+	$DAB_BANKS{$dst}-- if $dst;
+}
+
+# exceptions to dab.hr bugs 20191204
+bank_merge ('hpb-stedionica.hr', 'hpb.hr');	# HPB stambena stedionica pripojena HPB-u
+bank_merge (undef, 'bks.hr');			# BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
+
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
-		next if $bank =~ /bks|primorska|veneto|splitska|kbz|agram/;	# FIXME dab.hr bugs 20190101, ignore for now. jtbanka.hr=vaba.hr, BKS u EU sustavu osiguranja, ne HR; stedbanka.hr i primorska.hr u likvidaciji, prva-stambena.hr pripojena ZABA-i, veneto pripojen PBZ-u, splitska pripojena OTP-u. KBZ preimenovan u Agram.
 		warn "sumnjiv status banke $bank ($DAB_BANKS{$bank})";
 	}
 }
