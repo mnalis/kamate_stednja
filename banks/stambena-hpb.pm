@@ -1,6 +1,6 @@
-return best_kamata_html_mpp ('https://www.hpb-stedionica.hr/stambena-stednja/multi-stednja',
-	undef,
-	'tednju\s+',
-	'%'
+return best_kamata_html_mpp ('https://www.hpb.hr/gradanstvo/stednja-i-ulaganje/stambena-stednja',
+	'Kamatna stopa na(.*)',
+	'<strong>',
+	'%</strong>'
 );
 
