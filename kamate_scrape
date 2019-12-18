@@ -253,8 +253,8 @@ sub bank_merge($$)  {
 	$DAB_BANKS{$dst}-- if $dst;
 }
 
-# exceptions to dab.hr bugs 20191204
-bank_merge ('hpb-stedionica.hr', 'hpb.hr');	# HPB stambena stedionica pripojena HPB-u
+# exceptions to dab.hr bugs 20191218
+bank_merge (undef, 'hpb.hr');			# HPB stambena stedionica pripojena HPB-u
 bank_merge (undef, 'bks.hr');			# BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
 
 foreach my $bank (keys %DAB_BANKS) {
