@@ -94,7 +94,7 @@ sub fetch_url($) {
 	my ($url) = @_;
 	$mech = WWW::Mechanize->new();
 	$mech->agent($USER_AGENT);
-        $mech->ssl_opts(verify_hostname => 0, SSL_verify_mode => 0x00);	# kludge: allow fetching of broken HTTPS, FIXME/DELME!
+        #$mech->ssl_opts(verify_hostname => 0, SSL_verify_mode => 0x00);	# kludge: allow fetching of broken HTTPS, FIXME/DELME!
 	dbg 2, "Getting $url";
 	dbg 3, "using UA=$USER_AGENT";
 	$mech->get($url);
