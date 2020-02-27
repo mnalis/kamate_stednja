@@ -19,6 +19,8 @@ my $DEBUG = $ENV{DEBUG} || 0;
 my $FORCE = $ENV{FORCE} || 0;
 %ENV = ( PATH => '/usr/local/bin:/usr/bin:/bin' );
 
+our $USER_AGENT_FAKE='Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.90 Safari/537.36 2345Explorer/9.3.2.17332';
+our $USER_AGENT = 'like Wget/1.18 (linux-gnu) - WWW::Mechanize';
 
 use POSIX qw(strftime);
 use FindBin;
@@ -91,9 +93,10 @@ sub find_max_kamata_pp($$$) {
 sub fetch_url($) {
 	my ($url) = @_;
 	$mech = WWW::Mechanize->new();
-	$mech->agent('like Wget/1.18 (linux-gnu) - WWW::Mechanize');
+	$mech->agent($USER_AGENT);
         $mech->ssl_opts(verify_hostname => 0, SSL_verify_mode => 0x00);	# kludge: allow fetching of broken HTTPS, FIXME/DELME!
 	dbg 2, "Getting $url";
+	dbg 3, "using UA=$USER_AGENT";
 	$mech->get($url);
 	die "can't fetch $url: " . $mech->response() if !$mech->success();
 	return $mech->content;
