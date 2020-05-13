@@ -5,6 +5,7 @@ nothing:
 
 run:
 	if [ "`id -un`" = "$(USER)" ] ; then ./kamate_scrape; else env -i setuidgid $(USER) ./kamate_scrape; fi
+
 update:
 	umask 077; if [ "`id -un`" = "$(USER)" ] ; then git pull; else env -i setuidgid $(USER) git pull; fi
 	chmod -R a=rX ChartJS *.html *.js COPYING
