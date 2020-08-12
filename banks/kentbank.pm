@@ -4,7 +4,7 @@ my $last_datum = 0;
 my $last_link;
 
 # find latest link
-foreach my $link ( $mech->find_all_links( text_regex => qr/Letak .*tednje .* od /i ) ) {
+foreach my $link ( $mech->find_all_links( text_regex => qr/Letak .*tednj.* od /i ) ) {
 	my ($d, $m, $y) = $link->text() =~ /.*(\d{2})\.(\d{2})\.(\d{4})\./;
 	my $datum = "$y$m$d";
 	dbg 4, "test datum = $datum";
