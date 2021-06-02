@@ -1,4 +1,4 @@
-my $DEBUG = $ENV{DEBUG} || 9;
+my $DEBUG = $ENV{DEBUG} || 0;
 
 $DEBUG > 6 && print "about to fetch html\n";
 my $html = fetch_url('https://www.pbz.hr/gradjani/orocena-stednja.html');
