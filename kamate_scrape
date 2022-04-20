@@ -214,7 +214,9 @@ foreach my $bank (@banks) {
 	if ($bank =~ /^([a-z0-9_-]+)$/) { $bank = $1 } else { die "invalid bank name: $bank" }
 	my $bankcmd = "$DIR/$1.pm";
 	if (! -r "$bankcmd" ) { die "can't read bank $bank in cmd $bankcmd" }
-	$DAB_BANKS{extract_domain(scan_for_url($bankcmd))}++;	# increase bank from -1 to 0
+	my $bank_domain = extract_domain(scan_for_url($bankcmd));
+	dbg 3, "increasing bank count from DAB_BANKS{$bank_domain} for domain $bank_domain";
+	$DAB_BANKS{$bank_domain}++;	# increase bank from -1 to 0
 	my $rv = $sth_check->execute($bank, $now) or die $sth_check->errstr;
 	dbg 4,"rv=$rv for bank=$bank now=$now";
 	dbg 1, "*** Processing bank: $bank";
@@ -256,7 +258,8 @@ sub bank_merge($$)  {
 	$DAB_BANKS{$dst}-- if $dst;
 }
 
-# exceptions to dab.hr (now haod.hr) bugs 20200209
+# exceptions to dab.hr (now haod.hr) bugs 20220420
+bank_merge ('sberbank.hr', 'novahrvatskabanka.hr'); # Sberbank preuzela HPB grupacija 04/2022
 bank_merge (undef, 'bks.hr');			# BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
 
 foreach my $bank (keys %DAB_BANKS) {
