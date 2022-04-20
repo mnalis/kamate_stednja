@@ -1,12 +1,10 @@
-my $DEBUG = $ENV{DEBUG} || 0;
-
 my $html;
 #my $html = fetch_url('https://www.zaba.hr/home/footer/uvjeti-poslovanja/gradjani');	# uses JavaScript now 20181121 :(
 my $json = fetch_url('https://www.zaba.hr/home/footer/filtriranjeUvjetaPoslovanja?k1=116&k2=130');
-$DEBUG > 8 && print "JSON=$json\n";
+dbg 8, "JSON=$json";
 if ($json =~ m{"naziv"\s*:\s*"([^"]*\.pdf)".+"idDokument"\s*:\s*(\d+).+"opis"\s*:\s*"([^"]*?kamatne stope.*?ednju[^"]*)}i) {
 	my $filename="$1"; my $id="$2"; my $desc="$3";
-	$DEBUG > 5 && print "found $1 ($3) with id=$2\n";
+	dbg 5, "found $1 ($3) with id=$2";
 	my $url = "https://www.zaba.hr/home/med/dok/${id}/${filename}";
 	$html = fetch_url($url);
 }

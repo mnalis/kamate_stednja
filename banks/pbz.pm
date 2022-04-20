@@ -1,8 +1,6 @@
-my $DEBUG = $ENV{DEBUG} || 0;
-
-$DEBUG > 6 && print "about to fetch html\n";
+dbg 6, 'about to fetch html';
 my $html = fetch_url('https://www.pbz.hr/gradjani/orocena-stednja.html');
-$DEBUG > 6 && print "searching html\n";
+dbg 6, 'searching html';
 $mech->follow_link( text_regex => qr/kamatne stope/i );
-$DEBUG > 6 && print "searching pdf\n";
+dbg 6, 'searching pdf';
 return best_kamata_pdf_mpp(undef, '^', '\s*$');
