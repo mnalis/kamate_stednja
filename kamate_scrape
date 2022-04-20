@@ -190,7 +190,7 @@ if (scalar @ARGV > 0) {
 }
 
 # DAB.hr parsing list of banks
-my $html = fetch_url('http://www.dab.hr/clanice');
+my $html = fetch_url('http://www.haod.hr/clanice');
 $html =~ s{^.*Popis .*?lanica sustava osiguranja.*?(<ol>.*?</ol>).*$}{$1}si;
 dbg (9, "DAB HTML=$html");
 
@@ -256,7 +256,7 @@ sub bank_merge($$)  {
 	$DAB_BANKS{$dst}-- if $dst;
 }
 
-# exceptions to dab.hr bugs 20200209
+# exceptions to dab.hr (now haod.hr) bugs 20200209
 bank_merge (undef, 'bks.hr');			# BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
 
 foreach my $bank (keys %DAB_BANKS) {
