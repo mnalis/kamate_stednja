@@ -261,7 +261,6 @@ sub bank_merge($$)  {
 # exceptions to dab.hr (now haod.hr) bugs 20220420
 bank_merge (undef, 'rba.hr');           # Raiffeisen stambena štedionica se spojila sa Raiffeisenbank 2022/05
 bank_merge (undef, 'bks.hr');			# BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
-bank_merge ('pbz-stambena.hr', undef);  # PBZ Stambena štedionica pripojena PBZu i ne prima nova oročenja od 16.6.2022., ali HAOD je još prikazuje 23.6.2022.
 
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
