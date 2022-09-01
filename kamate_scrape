@@ -129,7 +129,7 @@ sub best_kamata_html_regex($$$) {
 # povlaci zadani URL i vraca najbolju kamatu koju pronadje na stranici sa default formatom: x,xx% 
 sub best_kamata_html_def($) {
 	my ($url) = @_;
-	return best_kamata_html_mpp ($url, undef, '\b', '\s*\%');
+	return best_kamata_html_mpp ($url, '<body(.*)</body>', '\b', '\s*\%');
 }
 
 # povlaci $pdf iz $mech->content (dobiven npr. za $mech->follow_link()) i vraca najbolju kamatu koju pronadje na stranici a matchira $PRE i $POST
