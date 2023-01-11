@@ -1,2 +1,2 @@
-return best_kamata_html_def ('https://www.kovanica.hr/gradanstvo/stednja/orocena-stednja/kunska');
+return best_kamata_html_def ('https://www.kovanica.hr/gradanstvo/stednja/orocena-stednja');
 
