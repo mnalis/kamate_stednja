@@ -10,6 +10,8 @@ use autodie qw(:all);
 
 use feature qw(say);
 
+my $MAX_POINTS = 100;
+
 my $DB='dbi:SQLite:dbname=kamate.db';
 my $DBUSER='';
 my $DBPASS='';
@@ -59,7 +61,33 @@ $DEBUG > 8 && say "banks_zero=" . Dumper(\%banks_zero);
 my @JSON_labels = ();
 my %JSON_banks = ();
 
-foreach my $datum (sort keys %all) {
+# check if there are too many elements to fit on screen?
+my @datumi = sort keys %all;
+my $count_full = scalar @datumi;
+$DEBUG > 1 && say "full count is $count_full. Is it > $MAX_POINTS limit?";
+if ($count_full > $MAX_POINTS) {
+	# we always want to retain first and last dates
+	my $prvi_datum = shift @datumi;
+	my $zadnji_datum = pop @datumi;
+
+	my $skip_nth = int ($count_full / $MAX_POINTS) + 1;
+	$DEBUG > 0 && say "full count $count_full > $MAX_POINTS, trim it - preserve only every $skip_nth element + first and last";
+
+	my @new_datumi = ($prvi_datum);
+
+	# do the actual trimming
+	for (my $i = 0; $i <= $#datumi; $i += $skip_nth) {
+		my $d = $datumi[$i];
+		$DEBUG > 3 && say "preserving datumi[$i]=$d";
+		push @new_datumi, $d;
+	}
+
+	# restore preserved last date
+	push @new_datumi, $zadnji_datum;
+	@datumi = @new_datumi;
+}
+
+foreach my $datum (@datumi) {
 	my $day_aref = $all{$datum};
 	$DEBUG > 1 && say "za datum $datum";
 
