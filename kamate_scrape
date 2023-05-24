@@ -73,8 +73,8 @@ sub find_max_kamata_regex($$) {
 		$best_kamata = $pct if $pct > $best_kamata;
 	}
 
-	dbg 4, "using regex: $regex";
-	dbg 8, "got HTML content: $html";
+	dbg 4, "using per-kamata regex: $regex";
+	dbg 8, "searching in extracted content: $html";
 	$html =~ s{$regex}{check_kamata("$1.$2")}gme;
 	dbg 3, "best_kamata=$best_kamata";
 	return $best_kamata;
