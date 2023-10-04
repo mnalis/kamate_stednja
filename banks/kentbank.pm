@@ -1,4 +1,4 @@
-my $html = fetch_url ('http://www.kentbank.hr/2608/orocena-stednja');
+my $html = fetch_url ('https://www.kentbank.hr/3512/otvorena-stednja');
 
 my $last_datum = 0;
 my $last_link = undef;
