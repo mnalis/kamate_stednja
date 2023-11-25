@@ -16,8 +16,28 @@ my $DB='dbi:SQLite:dbname=kamate.db';
 my $DBUSER='';
 my $DBPASS='';
 
-my @COLORS = qw ( Yellow Fuchsia Red Silver Gray Olive Purple Maroon Aqua Lime Teal Green Blue Navy
-	Aqua  Bisque  Aquamarine BlueViolet   BurlyWood  CadetBlue  Chartreuse  Chocolate  Crimson DarkGoldenRod  DarkCyan  DarkOliveGreen DarkMagenta  DarkSeaGreen  DeepPink  ForestGreen GreenYellow  LightCoral  MediumAquaMarine MediumVioletRed OrangeRed 
+my @COLORS = qw (
+	AliceBlue AntiqueWhite Aqua Aquamarine Beige Bisque Black
+	Blue BlueViolet Brown BurlyWood CadetBlue Chartreuse
+	Chocolate Coral CornflowerBlue Cornsilk Crimson Cyan DarkBlue DarkCyan
+	DarkGoldenRod DarkGreen DarkKhaki DarkMagenta
+	DarkOliveGreen DarkOrange DarkOrchid DarkRed DarkSalmon DarkSeaGreen
+	DarkSlateBlue DarkSlateGray DarkSlateGrey DarkTurquoise DarkViolet DeepPink
+	DeepSkyBlue DimGray DimGrey DodgerBlue FireBrick  ForestGreen
+	Fuchsia  Gold GoldenRod Green GreenYellow
+	HotPink IndianRed Indigo Khaki Lavender
+	LawnGreen LemonChiffon LightBlue LightCoral LightCyan LightGoldenRodYellow
+	LightGreen LightPink LightSalmon LightSeaGreen
+	LightSkyBlue  LightSteelBlue Lime
+	LimeGreen Linen Magenta Maroon MediumAquaMarine MediumBlue MediumOrchid
+	MediumPurple MediumSeaGreen MediumSlateBlue MediumSpringGreen
+	MediumTurquoise MediumVioletRed MidnightBlue MistyRose Moccasin
+	NavajoWhite Navy Olive OliveDrab Orange OrangeRed Orchid
+	PaleGoldenRod PaleGreen PaleTurquoise PaleVioletRed PapayaWhip PeachPuff
+	Peru Pink Plum PowderBlue Purple RebeccaPurple Red RosyBrown RoyalBlue
+	SaddleBrown Salmon SandyBrown SeaGreen Sienna Silver SkyBlue
+	SlateBlue SpringGreen SteelBlue Tan Teal Thistle
+	Tomato Turquoise Violet Wheat Yellow YellowGreen
 	);
 
 my $DEBUG = $ENV{DEBUG} || 0;
