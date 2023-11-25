@@ -34,7 +34,7 @@ my @COLORS = qw (
 	MediumTurquoise MediumVioletRed MidnightBlue MistyRose Moccasin
 	NavajoWhite Navy Olive OliveDrab Orange OrangeRed Orchid
 	PaleGoldenRod PaleGreen PaleTurquoise PaleVioletRed PapayaWhip PeachPuff
-	Peru Pink Plum PowderBlue Purple RebeccaPurple Red RosyBrown RoyalBlue
+	Peru Pink Plum Purple RebeccaPurple Red RosyBrown RoyalBlue
 	SaddleBrown Salmon SandyBrown SeaGreen Sienna Silver SkyBlue
 	SlateBlue SpringGreen SteelBlue Tan Teal Thistle
 	Tomato Turquoise Violet Wheat Yellow YellowGreen
