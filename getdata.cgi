@@ -136,7 +136,7 @@ $DEBUG > 0 && say "JSON_banks=" . Dumper(\%JSON_banks);
 my %OUTPUT_JSON = ();
 $OUTPUT_JSON{'labels'} = \@JSON_labels;
 
-foreach my $bank (keys %JSON_banks) {
+foreach my $bank (sort keys %JSON_banks) {
 	my $color = get_new_color();
 	my %dataset = (
 		lineTension => 0.05,
