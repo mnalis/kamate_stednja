@@ -17,27 +17,12 @@ my $DBUSER='';
 my $DBPASS='';
 
 my @COLORS = qw (
-	AliceBlue AntiqueWhite Aqua Aquamarine Beige Bisque Black
-	Blue BlueViolet Brown BurlyWood CadetBlue Chartreuse
-	Chocolate Coral CornflowerBlue Cornsilk Crimson Cyan DarkBlue DarkCyan
-	DarkGoldenRod DarkGreen DarkKhaki DarkMagenta
-	DarkOliveGreen DarkOrange DarkOrchid DarkRed DarkSalmon DarkSeaGreen
-	DarkSlateBlue DarkSlateGray DarkSlateGrey DarkTurquoise DarkViolet DeepPink
-	DeepSkyBlue DimGray DimGrey DodgerBlue FireBrick  ForestGreen
-	Fuchsia  Gold GoldenRod Green GreenYellow
-	HotPink IndianRed Indigo Khaki Lavender
-	LawnGreen LemonChiffon LightBlue LightCoral LightCyan LightGoldenRodYellow
-	LightGreen LightPink LightSalmon LightSeaGreen
-	LightSkyBlue  LightSteelBlue Lime
-	LimeGreen Linen Magenta Maroon MediumAquaMarine MediumBlue MediumOrchid
-	MediumPurple MediumSeaGreen MediumSlateBlue MediumSpringGreen
-	MediumTurquoise MediumVioletRed MidnightBlue MistyRose Moccasin
-	NavajoWhite Navy Olive OliveDrab Orange OrangeRed Orchid
-	PaleGoldenRod PaleGreen PaleTurquoise PaleVioletRed PapayaWhip PeachPuff
-	Peru Pink Plum Purple RebeccaPurple Red RosyBrown RoyalBlue
-	SaddleBrown Salmon SandyBrown SeaGreen Sienna Silver SkyBlue
-	SlateBlue SpringGreen SteelBlue Tan Teal Thistle
-	Tomato Turquoise Violet Wheat Yellow YellowGreen
+	darkslategray darkolivegreen saddlebrown darkgreen darkred olive
+	darkslateblue cadetblue mediumseagreen rosybrown peru steelblue yellowgreen
+	darkblue limegreen goldenrod purple2 darkseagreen maroon3 red darkturquoise
+	darkorange lime darkviolet crimson deepskyblue mediumpurple blue lightcoral
+	greenyellow fuchsia dodgerblue palegoldenrod laserlemon plum paleturquoise
+	violet palegreen aquamarine hotpink
 	);
 
 my $DEBUG = $ENV{DEBUG} || 0;
