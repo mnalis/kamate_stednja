@@ -26,7 +26,8 @@ use POSIX qw(strftime);
 use FindBin;
 use WWW::Mechanize;
 use DBI;
-use File::Temp qw( tempfile unlink0 );
+use File::Temp qw(tempfile unlink0);
+use List::Util qw(max);
 
 our $mech;
 
@@ -82,9 +83,13 @@ sub find_max_kamata_regex($$) {
 
 
 # pronalazi max kamatu sa zadanim $PRE i $POST u standardnom regexpu
+# if $POST is not defined, only use $PRE as a full regex, excluding default decimal number matching!
 sub find_max_kamata_pp($$$) {
 	my ($html, $pre, $post) = @_;
-	my $regex = "$pre" . '([1-9]?\d)[.,](\d{2})' . "$post";
+	my $regex = "$pre";
+	if (defined $post) {
+		$regex .= '([1-9]?\d)[.,](\d{2})' . "$post";
+	}
 	return find_max_kamata_regex($html, $regex);
 }
 
@@ -154,6 +159,25 @@ sub best_kamata_pdf_mpp($$$) {
 sub best_kamata_pdf_def() {
 	return best_kamata_pdf_mpp (undef, '\b', '\s*\%');
 }
+
+# iz liste .pdf linkova, skida sve PDFove i pronalazi najvecu kamatu
+sub max_of_all_pdf_links($$$@) {
+    my ($match, $pre, $post, @links) = @_;
+    my @k = ();
+    foreach my $link (@links) {
+        my $url = $link->url();
+        dbg 2, "  found link=$url";
+        $mech->get($url);
+        push @k, best_kamata_pdf_mpp($match, $pre, $post);
+        $mech->back();
+    }
+
+    my $max = max(@k);
+    dbg 2, "max=$max; k=" . join (',', @k);
+
+    return $max;
+}
+
 
 
 
