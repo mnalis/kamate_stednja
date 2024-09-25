@@ -34,6 +34,7 @@ our $mech;
 # debug helper
 sub dbg($$) {
 	my ($level, $txt) = @_;
+	#say "DEBUG: running dbg($level, $txt) if $DEBUG >= $level";
 	die "invalid call: dbg($level,$txt)" if $level !~ /^\d{1,3}$/;
 	if ($DEBUG >= $level) {
 		print "  " x ($level-1);	# ident
@@ -71,11 +72,13 @@ sub find_max_kamata_regex($$) {
 	sub check_kamata($) {
 		my ($pct) = @_;
 		dbg 5, "provjeravam kamatu $pct <=> $best_kamata";
+		$pct .= '00' if $pct =~ /^\d+\.$/;  # fix if no decimal places
 		$best_kamata = $pct if $pct > $best_kamata;
 	}
 
 	dbg 4, "using per-kamata regex: $regex";
 	dbg 8, "searching in extracted content: $html";
+	no warnings 'uninitialized';    # if forced-regex is integer, not decimal number, $2 is undef
 	$html =~ s{$regex}{check_kamata("$1.$2")}gme;
 	dbg 3, "best_kamata=$best_kamata";
 	return $best_kamata;
@@ -166,7 +169,7 @@ sub max_of_all_pdf_links($$$@) {
     my @k = ();
     foreach my $link (@links) {
         my $url = $link->url();
-        dbg 2, "  found link=$url";
+        dbg 2, " found link=$url";
         $mech->get($url);
         push @k, best_kamata_pdf_mpp($match, $pre, $post);
         $mech->back();
