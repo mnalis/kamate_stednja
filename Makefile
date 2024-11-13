@@ -8,7 +8,7 @@ run:
 	if [ "`id -un`" = "$(USER)" ] ; then ./kamate_scrape; else runuser -u $(USER) -- ./kamate_scrape; fi
 
 newbest:
-	if [ "`id -un`" = "$(USER)" ] ; then echo $(NB_SQL) | sqlite3 kamate.db; else runuser -u $(USER) -- echo $(NB_SQL) | sqlite3 kamate.db; fi
+	if [ "`id -un`" = "$(USER)" ] ; then echo $(NB_SQL) | sqlite3 kamate.db; else echo $(NB_SQL) | runuser -u $(USER) -- sqlite3 kamate.db; fi
 
 update:
 	umask 077; if [ "`id -un`" = "$(USER)" ] ; then git pull; else runuser -u $(USER) -- git pull; fi
