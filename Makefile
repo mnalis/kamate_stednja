@@ -5,13 +5,13 @@ nothing:
 	@echo Doing nothing as user=$(USER)...
 
 run:
-	if [ "`id -un`" = "$(USER)" ] ; then ./kamate_scrape; else env -i setuidgid $(USER) ./kamate_scrape; fi
+	if [ "`id -un`" = "$(USER)" ] ; then ./kamate_scrape; else runuser -u $(USER) -- ./kamate_scrape; fi
 
 newbest:
-	if [ "`id -un`" = "$(USER)" ] ; then echo $(NB_SQL) | sqlite3 kamate.db; else env -i setuidgid $(USER) echo $(NB_SQL) | sqlite3 kamate.db; fi
+	if [ "`id -un`" = "$(USER)" ] ; then echo $(NB_SQL) | sqlite3 kamate.db; else runuser -u $(USER) -- echo $(NB_SQL) | sqlite3 kamate.db; fi
 
 update:
-	umask 077; if [ "`id -un`" = "$(USER)" ] ; then git pull; else env -i setuidgid $(USER) git pull; fi
+	umask 077; if [ "`id -un`" = "$(USER)" ] ; then git pull; else runuser -u $(USER) -- git pull; fi
 	chmod -R a=rX ChartJS *.html *.js COPYING
 	chmod 700 *.cgi kamate_scrape .git
 
