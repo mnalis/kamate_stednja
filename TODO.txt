@@ -1,6 +1,10 @@
 scraper za kamate HR banaka
 
+- dodaj obveznice RH i RH trezorske zapise
+
 - comment out SSL-kludge SSL_verify_mode => '0x00'
+  (nazalost pbz.hr i agrambanka.hr jos failaju u 2025/02)
+
 - .cgi - ako ima dovoljno tocaka da simplificira mozda (>40 da uzme svaku drugu, > 80 svaku cetvrtu itd)
   i/ili paziti da ima podjednak razmak izmedju tocaka (jer nisu sve nuzno svakih 7 dana)
 
