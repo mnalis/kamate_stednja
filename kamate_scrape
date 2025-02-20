@@ -286,7 +286,8 @@ sub bank_merge($$)  {
 }
 
 # exceptions to dab.hr (now haod.hr) bugs 20220420
-bank_merge (undef, 'bks.hr');			# BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
+bank_merge (undef, 'bks.hr');			        # BKS vise nije unatar DAB osiguranja, ali je unutar ekvivalentnog EU osiguranja
+bank_merge (undef, 'e-riznica-mfin.gov.hr');    # Ministarstvo financija je nezavisno od DAB, nema osiguranja depozita
 
 foreach my $bank (keys %DAB_BANKS) {
 	if ($DAB_BANKS{$bank} != 0) {
