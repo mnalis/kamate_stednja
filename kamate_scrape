@@ -263,12 +263,13 @@ foreach my $bank (@banks) {
 
 	my $pct = 0;
 	my $ret = eval { $pct = require "$bankcmd"; };
-	dbg 2, "finished $bank: pct=$pct ret=" . ($ret ? $ret : "undef");
+	dbg 2, "finished $bank: pct=>$pct< ret=" . ($ret ? $ret : "undef");
 	if (! $ret) {
 		warn "neuspjesno dohvacanje banke $bank ($pct): $@";
 		next;
 	}
 	say "$pct\t$bank";
+	next if $ret eq '0 but true';   # e.g. MFIN where there are no offers for that time period
 	if ($pct <= 0) { die "invalid kamata $pct for $bank"; }
 	if ($DB) {
 		my $sth = $dbh->prepare ('REPLACE INTO kamate (bank,pct10) VALUES (?,?)') or die $dbh->errstr;
