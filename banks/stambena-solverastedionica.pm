@@ -1,4 +1,3 @@
-return best_kamata_html_regex ('http://www.solverastedionica.hr/stambena-stednja/tarifa-spore-stednje/33',
-	undef,
-	'\b([1-9]?\d)[.,](\d{1,2})\s*(?:<[^>]+>)?(?:&[^;]+;)?(?:</[^>]+>)?\s*%'
-);
+my $html = fetch_url('https://www.solverastedionica.hr/odluka-o-visini-nacinu-obracuna-i-naplate-kamata-180/180');
+$mech->follow_link( url_regex => qr/kamata.*\.pdf/i );
+return best_kamata_pdf_mpp('(.*)KAMATE NA KREDITE', '\b', '\s*\%');
