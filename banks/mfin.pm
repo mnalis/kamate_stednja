@@ -8,8 +8,12 @@ my $jissues = $$jref{'issues'};
 my $max = '0 but true';
 #print "    mfin DEBUG start max=$max\n";
 foreach my $href (@$jissues) {
+    my $label = $$href{'details'}{'paperTreasureLabel'} || '';
     my $pct = $$href{'interestRateInitial'};
-    #print "    daysleft=$$href{'daysLeft'} with pct=$pct\n";
+    #print "      label=$label,daysleft=$$href{'daysLeft'} with pct=$pct\n";
+
+    next unless label =~ /^RHMF/;   # prati samo drzavne obveznice / trezorske zapise, ne i random IPO-e kompanija
+
     if ($$href{'daysLeft'} > 0) {
         if ($pct > $max) {
             $max = $pct 
