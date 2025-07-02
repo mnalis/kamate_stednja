@@ -12,7 +12,7 @@ foreach my $href (@$jissues) {
     my $pct = $$href{'interestRateInitial'};
     #print "      label=$label,daysleft=$$href{'daysLeft'} with pct=$pct\n";
 
-    next unless label =~ /^RHMF/;   # prati samo drzavne obveznice / trezorske zapise, ne i random IPO-e kompanija
+    next unless $label =~ /^RHMF/;   # prati samo drzavne obveznice / trezorske zapise, ne i random IPO-e kompanija
 
     if ($$href{'daysLeft'} > 0) {
         if ($pct > $max) {
