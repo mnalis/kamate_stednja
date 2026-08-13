@@ -98,10 +98,10 @@ sub find_max_kamata_pp($$$) {
 
 
 # fetches URL and returns content as string
-sub fetch_url($) {
-	my ($url) = @_;
+sub fetch_url($@) {
+	my ($url, $fake_ua) = @_;
 	$mech = WWW::Mechanize->new();
-	$mech->agent($USER_AGENT);
+	$mech->agent($fake_ua ? $USER_AGENT_FAKE : $USER_AGENT);
 	$mech->ssl_opts(verify_hostname => 0, SSL_verify_mode => 0x00);	# kludge: allow fetching of broken HTTPS, FIXME! /mn/ 20220414 needed for pbz-stambena.hr, 20221026 for agrambanka.hr
 	dbg 2, "Getting $url";
 	dbg 3, "using UA=$USER_AGENT";
