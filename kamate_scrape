@@ -216,23 +216,27 @@ if (scalar @ARGV > 0) {
 	$manual = 1;
 }
 
-# DAB.hr parsing list of banks
-my $html = fetch_url('http://www.haod.hr/clanice');
-$html =~ s{^.*Popis .*?lanica sustava osiguranja.*?(<ol>.*?</ol>).*$}{$1}si;
-dbg (9, "DAB HTML=$html");
-
-$mech->update_html($html);
-my @dab_banks = $mech->find_all_links();
-
 our %DAB_BANKS = ();
-# list of all banks at DAB.HR
-foreach my $bank (@dab_banks) {
-	my $url = $bank->url();
-	my $domain = extract_domain($url);
-	dbg 3, "DAB bank URL=$url, domain=$domain";
-	$DAB_BANKS{$domain} = -1;
+unless ($manual) {
+	# DAB.hr parsing list of banks
+	my $html = fetch_url('http://www.haod.hr/clanice');
+	$html =~ s{^.*Popis .*?lanica sustava osiguranja.*?(<ol>.*?</ol>).*$}{$1}si;
+	dbg (9, "DAB HTML=$html");
+
+	$mech->update_html($html);
+	my @dab_banks = $mech->find_all_links();
+
+	# list of all banks at DAB.HR
+	foreach my $bank (@dab_banks) {
+		my $url = $bank->url();
+		my $domain = extract_domain($url);
+		dbg 3, "DAB bank URL=$url, domain=$domain";
+		$DAB_BANKS{$domain} = -1;
+	}
+
 }
 
+# all banks without info for today
 my $sth_check = $dbh->prepare ('SELECT pct10 from kamate where bank=? and datum=?') or die $dbh->errstr;	# only check banks which do not have info for today
 my $now = strftime "%Y-%m-%d", localtime;
 
