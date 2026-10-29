@@ -219,7 +219,7 @@ if (scalar @ARGV > 0) {
 our %DAB_BANKS = ();
 unless ($manual) {
 	# DAB.hr parsing list of banks
-	my $html = fetch_url('http://www.haod.hr/clanice');
+	my $html = fetch_url('http://www.haod.hr/clanice', 1);
 	$html =~ s{^.*Popis .*?lanica sustava osiguranja.*?(<ol>.*?</ol>).*$}{$1}si;
 	dbg (9, "DAB HTML=$html");
 
